@@ -1,11 +1,11 @@
 import { TbEqual, TbTrashX } from "react-icons/tb";
 
 import { ChangeEvent, useState } from "react";
-import { IShopRow } from "../App";
+import { IShopRow } from "../types/type";
 
 interface Props {
   row: IShopRow;
-  handleUpdateRow: (
+  onUpdateRow: (
     id: number,
     cat_id: number,
     value: string | number,
@@ -14,7 +14,7 @@ interface Props {
   onDelete: (id: number, cat_id: number) => void;
 }
 
-function ShoppingListRow({ row, handleUpdateRow, onDelete }: Props) {
+function ShoppingListRow({ row, onUpdateRow, onDelete }: Props) {
   const [editMode, setEditMode] = useState(false);
 
   const handleChange = (
@@ -22,12 +22,12 @@ function ShoppingListRow({ row, handleUpdateRow, onDelete }: Props) {
   ) => {
     const { value, name } = e.target;
     if (name === "inputRow") {
-      handleUpdateRow(row.id, row.cat_id, value, name);
+      onUpdateRow(row.id, row.cat_id, value, name);
     }
 
     if (name === "options") {
       {
-        handleUpdateRow(row.id, row.cat_id, value, name);
+        onUpdateRow(row.id, row.cat_id, value, name);
       }
     }
   };

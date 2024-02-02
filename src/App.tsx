@@ -1,54 +1,15 @@
 import { useState } from "react";
-import { data } from "./shoppingList";
+import { ICategory, IShopRow } from "./types/type";
+
 import ShoppingListForm from "./components/ShoppingListForm";
 import ShoppingListCategory from "./components/ShoppingListCategory";
-
-export type ICategory = {
-  id?: number;
-  categoryName: string;
-  categoryType: string;
-};
-
-export type IShopRow = {
-  id: number;
-  cat_id: number;
-  rowName: string;
-  quantity: number;
-};
-
-export type IUpdateRow = {
-  id: number;
-  cat_id: number;
-  value: string | number;
-  eventName: string;
-};
-
-export type List = {
-  id: number;
-  category: ICategory;
-};
-
-const rows = [
-  { id: 1, cat_id: 1, rowName: "ty", quantity: 2 },
-  {
-    id: 1,
-    cat_id: 2,
-    rowName: "tray",
-    quantity: 5,
-  },
-  {
-    id: 2,
-    cat_id: 2,
-    rowName: "tsray",
-    quantity: 6,
-  },
-];
+import { data, rows } from "./data/sampleData";
 
 function App() {
   const [shopCategory, setShopCategory] = useState(data);
   const [shoppingRow, setShoppingRow] = useState(rows);
 
-  const handleSave = (data: ICategory) => {
+  const handleCreateCategory = (data: ICategory) => {
     const newCat = {
       id: shopCategory.length + 1,
       categoryName: data.categoryName,
@@ -78,7 +39,7 @@ function App() {
     setShoppingRow([...shoppingRow, newRow]);
   };
 
-  const handleUpdateName = (id: number, categoryName: string) => {
+  const handleUpdateCategoryName = (id: number, categoryName: string) => {
     console.log(id, categoryName);
     const updateName = shopCategory.map((cat) => {
       if (cat.id !== id) return cat;
@@ -103,7 +64,7 @@ function App() {
     setShoppingRow(updateRow);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDeleteCategory = (id: number) => {
     const FilteredCategory = shopCategory.filter((cat) => cat.id !== id);
     setShopCategory(FilteredCategory);
   };
@@ -119,17 +80,17 @@ function App() {
   return (
     <div className="min-h-screen flex items-center flex-col gap-10 p-10">
       <h1 className="font-bold text-3xl">Shopping List App</h1>
-      <ShoppingListForm onSave={handleSave} />
+      <ShoppingListForm onSave={handleCreateCategory} />
       <div className="flex flex-wrap gap-2">
         {shopCategory.map((cat) => (
           <ShoppingListCategory
             key={cat.id}
             cat={cat}
-            onDelete={handleDelete}
-            handleUpdateName={handleUpdateName}
-            handleCreateRow={handleCreateRow}
-            handleDeleteRow={handleDeleteRow}
-            handleUpdateRow={handleUpdateRow}
+            onDeleteCategory={handleDeleteCategory}
+            onUpdateCategoryName={handleUpdateCategoryName}
+            onCreateRow={handleCreateRow}
+            onUpdateRow={handleUpdateRow}
+            onDeleteRow={handleDeleteRow}
             shoppingRow={shoppingRow.filter((row) => row.cat_id === cat.id)}
           />
         ))}

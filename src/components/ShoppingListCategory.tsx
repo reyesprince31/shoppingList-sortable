@@ -1,32 +1,32 @@
 import { TbEqual, TbPlaylistAdd, TbTrashX } from "react-icons/tb";
-import { ICategory, IShopRow } from "../App";
 
 import ShoppingListRow from "./ShoppingListRow";
 import { useState } from "react";
+import { ICategory, IShopRow } from "../types/type";
 
 interface Props {
   cat: ICategory;
-  handleUpdateName: (id: number, categoryName: string) => void;
-  handleCreateRow: (cat_id: number) => void;
-  handleDeleteRow: (id: number, cat_id: number) => void;
-  handleUpdateRow: (
+  onUpdateCategoryName: (id: number, categoryName: string) => void;
+  onCreateRow: (cat_id: number) => void;
+  onDeleteRow: (id: number, cat_id: number) => void;
+  onUpdateRow: (
     id: number,
     cat_id: number,
     value: string | number,
     eventName: string
   ) => void;
   shoppingRow: IShopRow[];
-  onDelete: (id: number) => void;
+  onDeleteCategory: (id: number) => void;
 }
 
 function ShoppingListCategory({
   cat,
-  handleUpdateName,
-  handleCreateRow,
-  handleDeleteRow,
-  handleUpdateRow,
+  onUpdateCategoryName,
+  onCreateRow,
+  onDeleteRow,
+  onUpdateRow,
   shoppingRow,
-  onDelete,
+  onDeleteCategory,
 }: Props) {
   const { id, categoryType, categoryName } = cat;
   const [editMode, setEditMode] = useState(false);
@@ -47,7 +47,7 @@ function ShoppingListCategory({
                   className="w-full px-2 text-xl font-semibold"
                   onBlur={() => setEditMode(false)}
                   onChange={(e) => {
-                    handleUpdateName(id!, e.target.value);
+                    onUpdateCategoryName(id!, e.target.value);
                   }}
                 />
               ) : (
@@ -59,7 +59,7 @@ function ShoppingListCategory({
               )}
             </div>
 
-            <button onClick={() => onDelete(id!)} className="px-2">
+            <button onClick={() => onDeleteCategory(id!)} className="px-2">
               <TbTrashX className="text-rose-500 text-lg" />
             </button>
           </div>
@@ -68,15 +68,15 @@ function ShoppingListCategory({
               <ShoppingListRow
                 key={row.id}
                 row={row}
-                onDelete={handleDeleteRow}
-                handleUpdateRow={handleUpdateRow}
+                onDelete={onDeleteRow}
+                onUpdateRow={onUpdateRow}
               />
             ))}
           </div>
         </div>
         <button
           className="bg-[#0076FF] h-[40px] w-full font-semibold text-white rounded-full flex items-center justify-center gap-2"
-          onClick={() => handleCreateRow(id!)}>
+          onClick={() => onCreateRow(id!)}>
           <TbPlaylistAdd className="text-2xl" /> Add Row
         </button>
       </div>

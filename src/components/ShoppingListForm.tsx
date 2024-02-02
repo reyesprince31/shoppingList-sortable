@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ICategory } from "../App";
+
 import { TbBasketPlus } from "react-icons/tb";
+import { ICategory } from "../types/type";
 
 function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
   const [listName, setListName] = useState("");
