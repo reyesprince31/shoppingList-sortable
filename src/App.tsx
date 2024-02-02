@@ -5,8 +5,8 @@ import ShoppingListCategory from "./components/ShoppingListCategory";
 
 export type ICategory = {
   id?: number;
-  name: string;
-  category: string;
+  categoryName: string;
+  categoryType: string;
 };
 
 export type IShopRow = {
@@ -48,16 +48,14 @@ function App() {
   const [shopCategory, setShopCategory] = useState(data);
   const [shoppingRow, setShoppingRow] = useState(rows);
 
-  console.log(shoppingRow);
-
   const handleSave = (data: ICategory) => {
     const newCat = {
       id: shopCategory.length + 1,
-      name: data.name,
-      category: data.category,
+      categoryName: data.categoryName,
+      categoryType: data.categoryType,
     };
 
-    if (newCat.name && newCat.category) {
+    if (newCat.categoryName && newCat.categoryType) {
       setShopCategory([...shopCategory, newCat]);
       alert("Shopping List Saved!");
     }
@@ -78,6 +76,15 @@ function App() {
     };
 
     setShoppingRow([...shoppingRow, newRow]);
+  };
+
+  const handleUpdateName = (id: number, categoryName: string) => {
+    console.log(id, categoryName);
+    const updateName = shopCategory.map((cat) => {
+      if (cat.id !== id) return cat;
+      return { ...cat, categoryName };
+    });
+    setShopCategory(updateName);
   };
 
   const handleUpdateRow = (
@@ -110,15 +117,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex items-center flex-col gap-10 mt-10">
+    <div className="min-h-screen flex items-center flex-col gap-10 p-10">
       <h1 className="font-bold text-3xl">Shopping List App</h1>
       <ShoppingListForm onSave={handleSave} />
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {shopCategory.map((cat) => (
           <ShoppingListCategory
             key={cat.id}
             cat={cat}
             onDelete={handleDelete}
+            handleUpdateName={handleUpdateName}
             handleCreateRow={handleCreateRow}
             handleDeleteRow={handleDeleteRow}
             handleUpdateRow={handleUpdateRow}

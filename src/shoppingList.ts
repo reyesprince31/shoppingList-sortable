@@ -1,17 +1,17 @@
 export const data = [
   {
     id: 1,
-    name: "list",
-    category: "Grocery",
+    categoryName: "list",
+    categoryType: "Grocery",
   },
   {
     id: 2,
-    name: "Gauthier",
-    category: "Grocery",
+    categoryName: "Gauthier",
+    categoryType: "Grocery",
   },
   {
     id: 3,
-    name: "Mellisa",
-    category: "Grocery",
+    categoryName: "Mellisa",
+    categoryType: "Grocery",
   },
 ];

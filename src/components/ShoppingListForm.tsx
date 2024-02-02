@@ -12,11 +12,13 @@ function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
     }
 
     const savedCat: ICategory = {
-      name: listName,
-      category: listType,
+      categoryName: listName,
+      categoryType: listType,
     };
 
     onSave(savedCat);
+    setListName("");
+    setListType("");
   };
 
   return (
