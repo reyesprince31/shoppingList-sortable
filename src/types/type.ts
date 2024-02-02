@@ -18,6 +18,11 @@ export type IUpdateRow = {
   eventName: string;
 };
 
+export type IDs = {
+  id: number;
+  cat_id: number;
+};
+
 export type List = {
   id: number;
   category: ICategory;

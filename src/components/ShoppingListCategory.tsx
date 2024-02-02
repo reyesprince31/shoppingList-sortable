@@ -3,9 +3,12 @@ import { TbEqual, TbPlaylistAdd, TbTrashX } from "react-icons/tb";
 import ShoppingListRow from "./ShoppingListRow";
 import { useState } from "react";
 import { ICategory, IShopRow } from "../types/type";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface Props {
   cat: ICategory;
+  shoppingRow: IShopRow[];
   onUpdateCategoryName: (id: number, categoryName: string) => void;
   onCreateRow: (cat_id: number) => void;
   onDeleteRow: (id: number, cat_id: number) => void;
@@ -15,29 +18,40 @@ interface Props {
     value: string | number,
     eventName: string
   ) => void;
-  shoppingRow: IShopRow[];
   onDeleteCategory: (id: number) => void;
 }
 
 function ShoppingListCategory({
   cat,
+  shoppingRow,
   onUpdateCategoryName,
   onCreateRow,
   onDeleteRow,
   onUpdateRow,
-  shoppingRow,
   onDeleteCategory,
 }: Props) {
   const { id, categoryType, categoryName } = cat;
   const [editMode, setEditMode] = useState(false);
 
+  const { setNodeRef, attributes, listeners, transform, transition } =
+    useSortable({ id: cat.id!, data: { type: "Category", cat } });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
   return (
-    <div>
+    <div ref={setNodeRef} style={style}>
       <span className="text-xs text-gray-300">{categoryType}</span>
-      <div className="p-2 bg-[#F5F6F8] min-h-[500px] w-[350px] space-y-2">
+      <div className="p-2 bg-[#F5F6F8] min-h-[500px] w-[350px] space-y-2 rounded-lg">
         <div className="flex flex-col h-[500px] rounded-lg gap-2 ">
           <div className="flex gap-2 items-center px-1 py-2">
-            <TbEqual className="text-xl cursor-grab" />
+            <TbEqual
+              className="text-xl cursor-grab"
+              {...attributes}
+              {...listeners}
+            />
             <div className="flex-grow gap-2 items-center">
               {editMode ? (
                 <input

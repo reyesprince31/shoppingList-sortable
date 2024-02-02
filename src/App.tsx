@@ -1,13 +1,24 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ICategory, IShopRow } from "./types/type";
 
 import ShoppingListForm from "./components/ShoppingListForm";
 import ShoppingListCategory from "./components/ShoppingListCategory";
 import { data, rows } from "./data/sampleData";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  horizontalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 function App() {
   const [shopCategory, setShopCategory] = useState(data);
   const [shoppingRow, setShoppingRow] = useState(rows);
+
+  const categoryId = useMemo(
+    () => shopCategory.map((cat) => cat.id),
+    [shopCategory]
+  );
 
   const handleCreateCategory = (data: ICategory) => {
     const newCat = {
@@ -77,24 +88,43 @@ function App() {
     setShoppingRow(FilteredRow);
   };
 
+  const onDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e;
+    if (active.id === over!.id) return;
+
+    setShopCategory((shop) => {
+      const oldIndex = shop.findIndex((cat) => cat.id === active.id);
+      const newIndex = shop.findIndex((cat) => cat.id === over!.id);
+      return arrayMove(shop, oldIndex, newIndex);
+    });
+    console.log(e);
+  };
+
   return (
     <div className="min-h-screen flex items-center flex-col gap-10 p-10">
       <h1 className="font-bold text-3xl">Shopping List App</h1>
       <ShoppingListForm onSave={handleCreateCategory} />
-      <div className="flex flex-wrap gap-2">
-        {shopCategory.map((cat) => (
-          <ShoppingListCategory
-            key={cat.id}
-            cat={cat}
-            onDeleteCategory={handleDeleteCategory}
-            onUpdateCategoryName={handleUpdateCategoryName}
-            onCreateRow={handleCreateRow}
-            onUpdateRow={handleUpdateRow}
-            onDeleteRow={handleDeleteRow}
-            shoppingRow={shoppingRow.filter((row) => row.cat_id === cat.id)}
-          />
-        ))}
-      </div>
+
+      <DndContext collisionDetection={closestCenter} onDragEnd={onDragEnd}>
+        <div className="flex flex-wrap gap-2">
+          <SortableContext
+            items={categoryId}
+            strategy={horizontalListSortingStrategy}>
+            {shopCategory.map((cat) => (
+              <ShoppingListCategory
+                key={cat.id}
+                cat={cat}
+                onDeleteCategory={handleDeleteCategory}
+                onUpdateCategoryName={handleUpdateCategoryName}
+                onCreateRow={handleCreateRow}
+                onUpdateRow={handleUpdateRow}
+                onDeleteRow={handleDeleteRow}
+                shoppingRow={shoppingRow.filter((row) => row.cat_id === cat.id)}
+              />
+            ))}
+          </SortableContext>
+        </div>
+      </DndContext>
     </div>
   );
 }
