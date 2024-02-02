@@ -65,9 +65,8 @@ function ShoppingListRow({ row, onUpdateRow, onDelete }: Props) {
   return (
     <div className="border border-1 p-2 flex  items-center rounded-lg gap-2">
       <div className="flex items-center gap-2 w-full">
-        <div className="cursor-grab">
-          <TbEqual />
-        </div>
+        <TbEqual className="cursor-grab" />
+
         <div
           className="w-full px-2 py-1
           "

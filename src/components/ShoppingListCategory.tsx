@@ -2,24 +2,9 @@ import { TbEqual, TbPlaylistAdd, TbTrashX } from "react-icons/tb";
 
 import ShoppingListRow from "./ShoppingListRow";
 import { useState } from "react";
-import { ICategory, IShopRow } from "../types/type";
+import { Props } from "../types/type";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-
-interface Props {
-  cat: ICategory;
-  shoppingRow: IShopRow[];
-  onUpdateCategoryName: (id: number, categoryName: string) => void;
-  onCreateRow: (cat_id: number) => void;
-  onDeleteRow: (id: number, cat_id: number) => void;
-  onUpdateRow: (
-    id: number,
-    cat_id: number,
-    value: string | number,
-    eventName: string
-  ) => void;
-  onDeleteCategory: (id: number) => void;
-}
 
 function ShoppingListCategory({
   cat,
@@ -32,14 +17,36 @@ function ShoppingListCategory({
 }: Props) {
   const { id, categoryType, categoryName } = cat;
   const [editMode, setEditMode] = useState(false);
+  // const shoppingRowId = shoppingRow.map((row) => row.id);
 
-  const { setNodeRef, attributes, listeners, transform, transition } =
-    useSortable({ id: cat.id!, data: { type: "Category", cat } });
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: cat.id!,
+    data: {
+      type: "Category",
+      cat,
+    },
+  });
 
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
   };
+
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="p-2 bg-slate-50 opacity-60 min-h-[500px] w-[350px] space-y-2 rounded-lg border-2 border-blue-500"></div>
+    );
+  }
 
   return (
     <div ref={setNodeRef} style={style}>
@@ -77,7 +84,9 @@ function ShoppingListCategory({
               <TbTrashX className="text-rose-500 text-lg" />
             </button>
           </div>
+
           <div className="flex flex-col gap-2 flex-grow bg-white rounded-lg p-2 overflow-x-auto">
+            {/* <SortableContext items={shoppingRowId}> */}
             {shoppingRow.map((row) => (
               <ShoppingListRow
                 key={row.id}
@@ -86,6 +95,7 @@ function ShoppingListCategory({
                 onUpdateRow={onUpdateRow}
               />
             ))}
+            {/* </SortableContext> */}
           </div>
         </div>
         <button
