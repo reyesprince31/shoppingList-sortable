@@ -18,7 +18,27 @@ export type IUpdateRow = {
   eventName: string;
 };
 
+export type IDs = {
+  id: number;
+  cat_id: number;
+};
+
 export type List = {
   id: number;
   category: ICategory;
 };
+
+export interface Props {
+  cat: ICategory;
+  shoppingRow: IShopRow[];
+  onUpdateCategoryName: (id: number, categoryName: string) => void;
+  onCreateRow: (cat_id: number) => void;
+  onDeleteRow: (id: number, cat_id: number) => void;
+  onUpdateRow: (
+    id: number,
+    cat_id: number,
+    value: string | number,
+    eventName: string
+  ) => void;
+  onDeleteCategory: (id: number) => void;
+}
