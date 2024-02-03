@@ -27,7 +27,7 @@ function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
     <div className="md:flex md:items-center md:w-[500px] md:gap-2 items-center md:space-y-0 space-y-2 ">
       <input
         type="text"
-        className="border px-2 border-black h-[40px] w-full"
+        className="border rounded px-2 border-black h-[40px] w-full placeholder:text-sm"
         placeholder="Shopping list name..."
         value={listName}
         onChange={(e) => setListName(e.target.value)}
@@ -35,14 +35,14 @@ function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
       <select
         value={listType}
         onChange={(e) => setListType(e.target.value)}
-        className="border px-2 border-black h-[40px] w-full">
+        className="border rounded px-2 border-black h-[40px] w-full">
         <option value="">Category Type</option>
         <option value="Grocery">Grocery</option>
         <option value="Home Goods">Home Goods</option>
         <option value="Hardware">Hardware</option>
       </select>
       <button
-        className="bg-blue-500 text-white h-[40px] px-4 py-2  w-full rounded-full flex items-center justify-center gap-2 text-lg"
+        className="bg-blue-500 text-white h-[40px] px-4 py-2  w-full rounded flex items-center justify-center gap-2 text-lg"
         onClick={handleSave}>
         <TbBasketPlus />
         Save
