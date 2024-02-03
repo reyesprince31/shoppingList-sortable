@@ -13,6 +13,7 @@ function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
     }
 
     const savedCat: ICategory = {
+      id: 0,
       categoryName: listName,
       categoryType: listType,
     };
@@ -23,7 +24,7 @@ function ShoppingListForm({ onSave }: { onSave: (data: ICategory) => void }) {
   };
 
   return (
-    <div className="flex flex-wrap gap-2 items-center max-w-[350px]">
+    <div className="md:flex md:items-center md:w-[500px] md:gap-2 items-center md:space-y-0 space-y-2 ">
       <input
         type="text"
         className="border px-2 border-black h-[40px] w-full"

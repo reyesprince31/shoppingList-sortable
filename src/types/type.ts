@@ -1,5 +1,5 @@
 export type ICategory = {
-  id?: number;
+  id: number;
   categoryName: string;
   categoryType: string;
 };
@@ -28,7 +28,7 @@ export type List = {
   category: ICategory;
 };
 
-export interface Props {
+export interface IPropsCategory {
   cat: ICategory;
   shoppingRow: IShopRow[];
   onUpdateCategoryName: (id: number, categoryName: string) => void;
@@ -41,4 +41,15 @@ export interface Props {
     eventName: string
   ) => void;
   onDeleteCategory: (id: number) => void;
+}
+
+export interface IPropsRow {
+  row: IShopRow;
+  onUpdateRow: (
+    id: number,
+    cat_id: number,
+    value: string | number,
+    eventName: string
+  ) => void;
+  onDeleteRow: (id: number, cat_id: number) => void;
 }
