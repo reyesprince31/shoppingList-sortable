@@ -1,30 +1,53 @@
-# React + TypeScript + Vite
+# Shopping List App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+The Shopping List App is a web application that allows users to manage their shopping lists with drag-and-drop functionality for organizing categories and rows. It provides a user-friendly interface for adding, updating, and deleting shopping categories and rows.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Drag-and-Drop**: Intuitive drag-and-drop interface for organizing shopping categories and rows.
+- **Category Management**: Add, update, and delete shopping categories.
+- **Row Management**: Add, update, and delete shopping rows within categories.
+- **Moving Row to Different Categories**: Drag and drop rows to other categories for seamless organization.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+Make sure you have the following software installed on your machine:
+
+- [Node.js](https://nodejs.org/) (version 14 or later)
+- [npm](https://www.npmjs.com/) (Node.js package manager)
+
+### Clone Repository
+
+```bash
+git clone https://github.com/your-username/shopping-list-app.git
+cd shopping-list-app
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run the Application
+
+```bash
+npm start
+```
+
+### Usage
+
+- Adding Category: Click on the "Add Category" button to create a new shopping category.
+- Updating Category Name: Click on the category name to enter edit mode and update the name.
+- Deleting Category: Click on the delete button to remove a shopping category and its associated rows.
+- Sorting Categories: Drag and drop categories to change their order.
+
+- Adding Row: Within each category, click on the "Add Row" button to create a new shopping row.
+- Updating Row: Update the row name and quantity by interacting with the corresponding fields.
+- Deleting Row: Hover over a row and click on the delete button to remove a shopping row.
+- Sorting Rows: Drag and drop rows within the same category to change their order.
+- Moving Row to Different Categories: Drag and drop rows to the other category.
